@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='mainpage.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <div class=container>
+    <h1 class=header>Enter Student Account Information Below</h1>
+    {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+                    {% if messages %}                            <!-- check if there are any messages -->
+                        {% for message in messages %}            <!-- loop through the messages -->
+                            <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+    </div>
+    <div class=main>
+        
+        <div class=container>
+            <h2>Create Student Account:</h2>
+            <form class=container action="/createstudent" method="post">
+                <Label for="first_name">First Name:</Label>
+                <input type="text" name="first_name" required>
+                <Label for="last_name">Last Name:</Label>
+                <input type="text" name="last_name" required>
+                <Label for="age">Age:</Label>
+                <input type="number" name="age" min=0 max=100 required>
+                <Label for="email">Email adress:</Label>
+                <input type="text" name="email" required>
+                <Label for="password">Password:</Label>
+                <input type="password" name="password" required>
+                <Label for="passwordcheck">Confirm Password:</Label>
+                <input type="password" name="passwordcheck" required>
+                <input type="submit"class="btn btn-primary" value="Create User">
+            </form>
+        </div>
+        <div class=container>
+            <h2>Log In:</h2>
+            <form class=container action="/login" method="post">
+                <Label for="email">Email adress:</Label>
+                <input type="text" name="email">
+                <Label for="password">Password:</Label>
+                <input type="password" name="password">
+                <input type="submit" class="btn btn-primary" value="Log-In">
+            </form>
+        </div>
+    </div>
+        {%if session%}
+        <form class=container action="/logout" method="post">
+            <input type="submit" class="btn btn-primary" value="Log-out">
+        </form>
+        {%endif%}
+        
+        
+</body>
+</html>

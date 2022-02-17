@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='mainpage.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <div class=main>
+        <h1>Welcome Back {{session['first_name']}}!</h1>
+        {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+            {% if messages %}                            <!-- check if there are any messages -->
+                {% for message in messages %}            <!-- loop through the messages -->
+                    <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div class="hcontainer">
+        <form class=container action="/logout" method="post">
+            <input type="submit" class="btn btn-primary" value="Log-out">
+        </form>
+        <form class=container action="/createclass">
+            <input type="submit" class="btn btn-primary" value="Create Class">
+        </form>
+        </div>
+    </div>
+    <div class=container>
+    <div class=container>
+        <h2>All Available Classes</h2>
+        <table class="table table-dark table-striped table-hover">
+            <tr>
+                <th>Class Name:</th>
+                <th>Actions</th>
+            </tr>
+            {%for class in all_classes%}
+            <tr>
+                <td><a href="/class/{{class.id}}">{{class.name}}</a></td>
+                <td><a href="/class/enroll/{{class.id}}">Enroll</a>
+                    <a href="/class/edit/{{class.id}}">Edit</a>
+                </td>
+            </tr>
+            
+            {% endfor %}
+        </table>
+    </div>
+    <div>
+        <h2>My Classes</h2>
+        <table class="table table-dark table-striped table-hover">
+            <tr>
+                <th>Class Name:</th>
+                <th>Content</th>
+            </tr>
+            {%for class in all_my_classes%}
+            <tr>
+                <td><a href="/class/{{class.id}}">{{class.name}}</a></td>
+                <td>{{class.content}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+        
+        
+</body>
+</html>
